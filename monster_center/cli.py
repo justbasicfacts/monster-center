@@ -41,7 +41,7 @@ def print_status(data):
     if gpu.get("available"):
         print(f"GPU      {fmt(gpu.get('temp'), ' C')}, {fmt(gpu.get('power_draw'), ' W')} draw, "
               f"{gpu.get('util')}% load, {gpu.get('clock_graphics')} MHz, "
-              f"{gpu.get('mem_used')}/{gpu.get('mem_total')} MiB")
+              f"vram {gpu.get('mem_used')}/{gpu.get('mem_total')} MiB")
         print(f"         {gpu.get('name')}, power limit {fmt(gpu.get('power_limit'), ' W')}")
     else:
         print("GPU      not reachable")

@@ -181,7 +181,7 @@ class MonsterCenter(Gtk.Window):
         self.gpu_load, self.gpu_load_v = row("load", "--")
         self.gpu_clock, self.gpu_clock_v = row("core clock", "--")
         self.gpu_power, self.gpu_power_v = row("power", "--")
-        self.gpu_mem, self.gpu_mem_v = row("memory", "--")
+        self.gpu_mem, self.gpu_mem_v = row("vram", "--")
         for widget in (self.gpu_load, self.gpu_clock, self.gpu_power, self.gpu_mem):
             gpu_box.pack_start(widget, False, False, 0)
         grid.attach(gpu_card, 1, 0, 1, 1)
