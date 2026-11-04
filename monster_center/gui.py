@@ -234,6 +234,13 @@ class MonsterCenter(Gtk.Window):
         cores_box.pack_start(self.cores_grid, False, False, 0)
         grid.attach(cores_card, 2, 1, 1, 1)
 
+        mem_card, mem_box = card("Memory")
+        self.ram_row, self.ram_v = row("system ram", "--")
+        self.swap_row, self.swap_v = row("swap", "--")
+        for widget in (self.ram_row, self.swap_row):
+            mem_box.pack_start(widget, False, False, 0)
+        grid.attach(mem_card, 0, 2, 3, 1)
+
         return grid
 
     # -------------------------------------------------------- performance
@@ -752,6 +759,20 @@ class MonsterCenter(Gtk.Window):
             self.bat_level.set_text(f"{bat.get('capacity')}%")
             self.bat_status_v.set_text(bat.get("status") or "--")
             self.bat_ac_v.set_text("plugged in" if bat.get("ac_online") else "on battery")
+
+        ram = data.get("ram") or {}
+        if ram.get("available"):
+            pct = round(ram["used_mb"] * 100 / ram["total_mb"]) if ram["total_mb"] else 0
+            self.ram_v.set_text(
+                f"{ram['used_mb']} / {ram['total_mb']} MiB  ({pct}%)")
+            if ram.get("swap_total_mb"):
+                self.swap_v.set_text(
+                    f"{ram['swap_used_mb']} / {ram['swap_total_mb']} MiB")
+            else:
+                self.swap_v.set_text("none")
+        else:
+            self.ram_v.set_text("unavailable")
+            self.swap_v.set_text("unavailable")
 
         pch = temps.get("pch", {})
         nvme = temps.get("nvme", {})

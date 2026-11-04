@@ -20,6 +20,7 @@ Monitoring (1-2 s refresh)
 - Fan levels, board and GPU temperatures from the embedded controller
 - Chipset, two NVMe drives, Wi-Fi temperatures
 - Battery level, charge state, AC adapter
+- System RAM and swap, used and total, from `/proc/meminfo`
 
 Controls (verified on the hardware)
 

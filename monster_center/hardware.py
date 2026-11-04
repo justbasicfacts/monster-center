@@ -296,6 +296,34 @@ def cpu_max_mhz():
 
 # --------------------------------------------------------------- power
 
+def memory_info():
+    """System RAM and swap in MiB, from /proc/meminfo."""
+    wanted = ("MemTotal", "MemAvailable", "MemFree", "SwapTotal", "SwapFree")
+    values = {}
+    try:
+        with open("/proc/meminfo") as f:
+            for line in f:
+                key, _, rest = line.partition(":")
+                if key in wanted:
+                    values[key] = int(rest.split()[0]) // 1024
+    except (OSError, ValueError):
+        return {"available": False}
+    total = values.get("MemTotal", 0)
+    if not total:
+        return {"available": False}
+    available = values.get("MemAvailable", values.get("MemFree", 0))
+    swap_total = values.get("SwapTotal", 0)
+    swap_free = values.get("SwapFree", 0)
+    return {
+        "available": True,
+        "total_mb": total,
+        "used_mb": max(total - available, 0),
+        "available_mb": available,
+        "swap_total_mb": swap_total,
+        "swap_used_mb": max(swap_total - swap_free, 0),
+    }
+
+
 def power_limits():
     return {
         "pl1_w": (_read(f"{RAPL}/constraint_0_power_limit_uw", cast=int) or 0) / 1e6,
@@ -499,6 +527,7 @@ def telemetry(meter=None):
         "gpu": gpu_info(),
         "power": power_limits(),
         "battery": battery_info(),
+        "ram": memory_info(),
         "temps": sensors_all(),
         "graphics_mode": graphics_mode(),
         "keyboard": keyboard_status(),

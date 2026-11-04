@@ -24,6 +24,7 @@ def print_status(data):
     gpu = data.get("gpu", {})
     power = data.get("power", {})
     bat = data.get("battery", {})
+    ram = data.get("ram", {})
     temps = data.get("temps", {})
     cores = temps.get("cpu_cores", {})
     package = next((v for k, v in cores.items() if "Package" in k), None)
@@ -61,6 +62,12 @@ def print_status(data):
     if bat.get("present"):
         print(f"Battery  {bat.get('capacity')}% ({bat.get('status')}), "
               f"AC {'plugged' if bat.get('ac_online') else 'unplugged'}")
+    if ram.get("available"):
+        used, total = ram.get("used_mb", 0), ram.get("total_mb", 0)
+        pct = round(used * 100 / total) if total else 0
+        swap = (f", swap {ram.get('swap_used_mb')}/{ram.get('swap_total_mb')} MiB"
+                if ram.get("swap_total_mb") else ", no swap")
+        print(f"RAM      {used} / {total} MiB used ({pct}%){swap}")
     kbd = data.get("keyboard") or {}
     if kbd.get("available"):
         print(f"Keyboard {kbd.get('zones', 4)} addressable zones on {kbd.get('device')}")
