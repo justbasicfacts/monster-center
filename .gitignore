@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+*.bak
+*.log
+.venv/
+venv/
+*.desktop.bak

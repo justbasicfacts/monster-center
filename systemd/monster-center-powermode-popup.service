@@ -1,0 +1,13 @@
+[Unit]
+Description=Monster Center power-mode popup
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m monster_center.powermode popup
+Environment=PYTHONPATH=/opt/monster-center
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

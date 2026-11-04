@@ -1,0 +1,14 @@
+[Unit]
+Description=Monster Center power-mode key watcher (Tongfang EC 0x0751)
+After=monster-center.service
+Wants=monster-center.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m monster_center.powermode watch
+Environment=PYTHONPATH=/opt/monster-center
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

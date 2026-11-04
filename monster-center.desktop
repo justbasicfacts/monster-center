@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Monster Center
+GenericName=Hardware Control Center
+Comment=Temperatures, power profiles, power limits and keyboard lighting for the Monster TULPAR T5
+Exec=monster-center gui
+Icon=preferences-system
+Terminal=false
+Categories=Settings;HardwareSettings;
+Keywords=fan;temperature;performance;monster;tulpar;tongfang;rgb;
+StartupNotify=true

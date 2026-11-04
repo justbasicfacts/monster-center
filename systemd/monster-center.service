@@ -1,0 +1,20 @@
+[Unit]
+Description=Monster Center hardware daemon (TULPAR T5 sensors, power limits, keyboard LED)
+After=multi-user.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m monster_center.daemon
+WorkingDirectory=/opt/monster-center
+Environment=PYTHONPATH=/opt/monster-center
+Restart=always
+RestartSec=3
+Nice=-5
+# the daemon needs raw device access (EC, USB HID, MSR/RAPL, nvidia-smi)
+ProtectSystem=false
+ProtectHome=false
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
